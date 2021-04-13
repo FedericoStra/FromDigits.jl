@@ -33,6 +33,12 @@ julia> fromdigits_unchecked(fill(1, 20))
 
 julia> fromdigits(BigInt, fill(1, 20))
 11111111111111111111
+
+julia> fromdigits(digits(UInt32, 12345))
+0x00003039
+
+julia> fromdigits(UInt16[0x1, 0x2, 0x3]; base=0x0010)
+0x0321
 ```
 
 ## Library
