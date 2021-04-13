@@ -13,19 +13,21 @@ See also [`fromdigits_unchecked`](@ref).
 function fromdigits end
 
 """
-    fromdigits(digits::AbstractVector{D}; base::D=D(10)) where D<:Integer
+    fromdigits(digits::AbstractVector{D}; base::B=D(10)) where {B<:Integer, D<:Integer}
 
-Returns the integer represented by the `digits` in the `base`. The result is of type `D`.
+Returns the integer represented by the `digits` in the `base`.
+
+The result is of type `promote_type(B, D)`.
 """
-fromdigits(digits::AbstractVector{D}; base::D=D(10)) where D<:Integer =
-    fromdigits(D, digits; base=base)
+fromdigits(digits::AbstractVector{D}; base::B=D(10)) where {B<:Integer, D<:Integer} =
+    fromdigits(promote_type(B, D), digits; base=base)
 
 """
-    fromdigits(T::Type{<:Integer}, digits::AbstractVector{D}; base::D=D(10)) where D<:Integer
+    fromdigits(T::Type{<:Integer}, digits::AbstractVector{D}; base::B=D(10)) where {B<:Integer, D<:Integer}
 
 Returns the integer represented by the `digits` in the `base`. The result is of type `T`.
 """
-function fromdigits(T::Type{<:Integer}, digits::AbstractVector{D}; base::D=D(10)) where D<:Integer
+function fromdigits(T::Type{<:Integer}, digits::AbstractVector{D}; base::B=D(10)) where {B<:Integer, D<:Integer}
     all(d -> d >= 0, digits) || all(d -> d <= 0, digits) || throw(ArgumentError("All the digits must have the same sign"))
     x = zero(T)
     for i in reverse(eachindex(digits))
@@ -46,10 +48,10 @@ See also [`fromdigits`](@ref).
 """
 function fromdigits_unchecked end
 
-fromdigits_unchecked(digits::AbstractVector{D}; base::D=D(10)) where D<:Integer =
-    fromdigits_unchecked(D, digits; base=base)
+fromdigits_unchecked(digits::AbstractVector{D}; base::B=D(10)) where {B<:Integer, D<:Integer} =
+    fromdigits_unchecked(promote_type(B, D), digits; base=base)
 
-function fromdigits_unchecked(T::Type{<:Integer}, digits::AbstractVector{D}; base::D=(10)) where D<:Integer
+function fromdigits_unchecked(T::Type{<:Integer}, digits::AbstractVector{D}; base::B=(10)) where {B<:Integer, D<:Integer}
     # return foldr((d, x) -> base*x + d, digits; init=zero(T))
     # return evalpoly(base, digits)
     x = zero(T)

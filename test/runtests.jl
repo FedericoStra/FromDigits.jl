@@ -16,6 +16,7 @@ using Test
         @test fromdigits(0:9) === 9876543210
         @test fromdigits(UInt16, [1,2,3]) === 0x0141
         @test fromdigits(fill(1,19)) === 1111111111111111111
+        @test fromdigits([false, true, false, true, false, true]; base=2) === 42
     end
     @testset "invalid" begin
         @testset "invalid digit" begin
