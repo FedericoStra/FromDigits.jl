@@ -1,0 +1,7 @@
+name = "FromDigits"
+uuid = "a6d61093-4b9a-4edd-a5a7-589135744240"
+authors = ["Federico Stra <stra.federico@gmail.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1.2"
